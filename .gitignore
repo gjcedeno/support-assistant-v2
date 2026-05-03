@@ -1,0 +1,20 @@
+# =============================================================================
+# Support Assistant — .gitignore
+# =============================================================================
+# This file tells Git which files to NEVER upload to GitHub.
+# The most important one is config.js which contains all API keys.
+# =============================================================================
+
+# API keys and secrets — NEVER upload this
+config.js
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+.vscode/
+*.code-workspace
+
+# Logs
+*.log
