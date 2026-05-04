@@ -1,8 +1,6 @@
 /**
  * app.js — Support Assistant Core Logic
  * =============================================================================
- * This file contains all JavaScript logic for the Support Assistant.
- * It reads API credentials from config.js (which is gitignored).
  *
  * Architecture:
  *  - State management: global state object
@@ -23,7 +21,6 @@
  *  5. User saves → saveTicket() → getEmbedding() → insertTicket()
  * =============================================================================
  */
-
 // =============================================================================
 // CONFIGURATION
 // Read from config.js (gitignored). See config.example.js for setup.

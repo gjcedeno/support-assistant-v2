@@ -17,13 +17,13 @@ An AI-powered support ticket assistant for the WP All Import / WP All Export tea
 
 ## Tech stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Vanilla HTML, CSS, JavaScript (no framework) |
-| AI — Generation | Anthropic Claude Sonnet 4.6 |
+| Layer           | Technology                                        |
+| --------------- | ------------------------------------------------- |
+| Frontend        | Vanilla HTML, CSS, JavaScript (no framework)      |
+| AI — Generation | Anthropic Claude Sonnet 4.6                       |
 | AI — Embeddings | OpenAI `text-embedding-3-small` (1536 dimensions) |
-| Database | Supabase (PostgreSQL + pgvector extension) |
-| Hosting | Vercel (auto-deploy from GitHub) |
+| Database        | Supabase (PostgreSQL + pgvector extension)        |
+| Hosting         | Vercel (auto-deploy from GitHub)                  |
 
 ---
 
@@ -47,8 +47,8 @@ support-assistant/
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/gjcedeno/support-assistant.git
-cd support-assistant
+git clone https://github.com/gjcedeno/support-assistant-v2.git
+cd support-assistant-v2
 ```
 
 ### 2. Create your config file
@@ -61,10 +61,10 @@ Open `config.js` and fill in your API keys:
 
 ```js
 const CONFIG = {
-  ANTHROPIC_KEY: 'sk-ant-...',   // from console.anthropic.com
-  OPENAI_KEY: 'sk-...',          // from platform.openai.com
-  SUPABASE_URL: '...',           // from Supabase Dashboard → Project Settings
-  SUPABASE_ANON: '...',          // from Supabase Dashboard → Project Settings
+  ANTHROPIC_KEY: "sk-ant-...", // from console.anthropic.com
+  OPENAI_KEY: "sk-...", // from platform.openai.com
+  SUPABASE_URL: "...", // from Supabase Dashboard → Project Settings
+  SUPABASE_ANON: "...", // from Supabase Dashboard → Project Settings
 };
 ```
 
@@ -78,9 +78,10 @@ Open `index.html` directly in your browser — no build step or server required.
 
 The app is deployed automatically via Vercel on every push to the `main` branch.
 
-Live URL: https://support-assistant-seven.vercel.app/
+Live URL: https://support-assistant-v2.vercel.app/
 
 To deploy manually:
+
 1. Push changes to GitHub
 2. Vercel detects the push and deploys within 1-2 minutes
 
@@ -92,14 +93,14 @@ To deploy manually:
 
 **Table: `tickets`**
 
-| Column | Type | Description |
-|---|---|---|
-| `id` | int8 | Auto-increment primary key |
-| `ticket` | text | Original customer ticket text |
-| `conversation` | text | Agent response (format: `Customer: ...\n\nAgent: ...`) |
-| `embedding` | vector(1536) | OpenAI embedding of the ticket text |
-| `from_pdf` | boolean | Whether this was imported from a PDF |
-| `created_at` | timestamptz | Auto-set on insert |
+| Column         | Type         | Description                                            |
+| -------------- | ------------ | ------------------------------------------------------ |
+| `id`           | int8         | Auto-increment primary key                             |
+| `ticket`       | text         | Original customer ticket text                          |
+| `conversation` | text         | Agent response (format: `Customer: ...\n\nAgent: ...`) |
+| `embedding`    | vector(1536) | OpenAI embedding of the ticket text                    |
+| `from_pdf`     | boolean      | Whether this was imported from a PDF                   |
+| `created_at`   | timestamptz  | Auto-set on insert                                     |
 
 **SQL function: `match_tickets`**
 
@@ -113,14 +114,14 @@ match_tickets(query_embedding vector, match_threshold float, match_count int)
 
 ## Key parameters
 
-| Parameter | Value | Description |
-|---|---|---|
-| Embedding model | `text-embedding-3-small` | OpenAI model for vector generation |
-| Vector dimensions | 1536 | Size of embedding vectors |
-| Similarity threshold | 0.35 | Minimum cosine similarity to include a reference |
-| Candidates fetched | 15 | Results from Supabase before reranking |
-| References shown | Up to 10 | After Claude reranks the 15 candidates |
-| Max response tokens | 1200 | Claude's response length limit |
+| Parameter            | Value                    | Description                                      |
+| -------------------- | ------------------------ | ------------------------------------------------ |
+| Embedding model      | `text-embedding-3-small` | OpenAI model for vector generation               |
+| Vector dimensions    | 1536                     | Size of embedding vectors                        |
+| Similarity threshold | 0.35                     | Minimum cosine similarity to include a reference |
+| Candidates fetched   | 15                       | Results from Supabase before reranking           |
+| References shown     | Up to 10                 | After Claude reranks the 15 candidates           |
+| Max response tokens  | 1200                     | Claude's response length limit                   |
 
 ---
 
@@ -131,9 +132,3 @@ A Python import script is available separately (`import_chatgpt.py`) to bulk-imp
 Requirements: `pip install requests`
 
 ---
-
-## Future improvements
-
-- [ ] HelpScout API integration — import all company historical tickets
-- [ ] Vercel serverless functions — move API keys server-side
-- [ ] Script v3.0 — reimport ChatGPT data with Sonnet for better quality extraction
